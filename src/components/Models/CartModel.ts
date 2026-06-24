@@ -16,17 +16,17 @@ export class CartModel { // создали класс CartModel
 
     addItem(item: IProduct): void { // добавляем новый товар в конец массива items
         this.items.push(item);
-        this.events.emit('cart:changed', {items: this.items}); // вызываем событие cart:changed, передавая обновленный список товаров
+        //this.events.emit('cart:changed', {items: this.items}); // вызываем событие cart:changed, передавая обновленный список товаров
     }
 
     removeItem(id: string): void { // фильтруем массив, оставляя только те товары, у которых id не совпадает с переданнымю Товар с нужным id удаляется
         this.items = this.items.filter(item => item.id !== id);
-        this.events.emit('cart:changed', {items: this.items}); // отправляем событие cart:changed
+        //this.events.emit('cart:changed', {items: this.items}); // отправляем событие cart:changed
     }
 
     clearCart(): void { // очистка корзины
         this.items = []; // чистим корзину, сбрасывая items до пустого массива
-        this.events.emit('cart:changed', {items: this.items}); // оповещаем, что корзина пуста
+        //this.events.emit('cart:changed', {items: this.items}); // оповещаем, что корзина пуста
     }
 
     getTotal(): number { // вычисляем общую стоимость всех товаров в корзине

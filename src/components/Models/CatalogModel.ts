@@ -13,7 +13,7 @@ export class CatalogModel { // создали класс CatalogModel
 
     setItems(products: IProduct[]): void { // метод, который принимает массив продуктов, сохраняет его в items и отправляет событие catalog:changed
         this.items = products;
-        this.events.emit('catalog:changed', {items: this.items});
+        //this.events.emit('catalog:changed', {items: this.items});
     }
 
     getItems(): IProduct[] { // геттер, который возвращает текущий список товаров
@@ -26,7 +26,7 @@ export class CatalogModel { // создали класс CatalogModel
 
     setSelectedItem(item: IProduct): void { // устанавливает переданный товар как выбранный
         this.selectedItem = item;
-        this.events.emit('catalog:selectedChanged', {item: this.selectedItem}); // отправляет событие catalog.selectedChanged
+        //this.events.emit('catalog:selectedChanged', {item: this.selectedItem}); // отправляет событие catalog.selectedChanged
     }
 
     getSelectedItem(): IProduct | null { // возвращает текущий выбранный товар или если ничего не выбрано - null

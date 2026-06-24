@@ -8,23 +8,27 @@ export class AppApi { // создаем класс AppApi
         this.api = api;
     }
 
-    async getProducts(): Promise<IProduct[]> { // getProducts асинхронный метод для загрузки каталога товаров
-        try {
-            const response = await this.api.get<IProductsResponse>('/product'); // отправляем GET-запрос на эдпоинт /product, ожидаем ответ с типом IProductsResponse
-            return response.items; // возвращаем массив товаров
-        } catch(error) { // если сервер недоступен или произошла ошибка
-            console.log("Возникли проблемы с сервером при получении товаров:", error); // выводится ошибка в консоль
-            throw error;
-        }
+    getProducts(): Promise<IProduct[]> { // getProducts асинхронный метод для загрузки каталога товаров
+        return this.api.get<IProductsResponse>('/product'); // отправляем GET-
     }
+        //try {
+            //const response = await this.api.get<IProductsResponse>('/product'); // отправляем GET-запрос на эдпоинт /product, ожидаем ответ с типом IProductsResponse
+            //return response.items; // возвращаем массив товаров
+        //} catch(error) { // если сервер недоступен или произошла ошибка
+            //console.log("Возникли проблемы с сервером при получении товаров:", error); // выводится ошибка в консоль
+            //throw error;
+        //}
+    //}
 
-    async postOrder(order: IOrder): Promise<IOrderResult> { // postorder асинхронный метод для оформления заказа, принимает данные заказа
-        try {
-            const result = await this.api.post<IOrderResult>('/order', order); // делает POST-запрос на адрес /order,передавая данные покупателя и корзины
-            return result // возвращает положительный результат
-        } catch(error) {
-            console.log("Возникли проблемы с сервером при отправке заказа:", error); // выводится ошибка в консоль
-            throw error;
-        }
+    postOrder(order: IOrder): Promise<IOrderResult> { // postorder асинхронный метод для оформления заказа, принимает данные заказа
+        return this.api.post<IOrderResult>('/order', order);
     }
+       // try {
+            //const result = await this.api.post<IOrderResult>('/order', order); // делает POST-запрос на адрес /order,передавая данные покупателя и корзины
+            //return result // возвращает положительный результат
+        //} catch(error) {
+            //console.log("Возникли проблемы с сервером при отправке заказа:", error); // выводится ошибка в консоль
+            //throw error;
+        //}
+    //}
 }
