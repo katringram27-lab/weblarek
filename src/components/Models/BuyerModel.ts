@@ -7,11 +7,11 @@ export class BuyerModel { // создаем класс BuyerModel
     protected phone: string;
     protected address: string;
 
-    constructor(protected events: IEvents) { // принимаем брокер событий events, чтобы модель могла оповещать др части приложения об изменениях
-        this.payment = null; // инициализируем данные null для оплаты
-        this.email = ''; // инициализируем данные пустыми строками
-        this.phone = '';
-        this.address = '';
+constructor(protected events: IEvents) { // принимаем брокер событий events, чтобы модель могла оповещать др части приложения об изменениях
+    this.payment = null; // инициализируем данные null для оплаты
+    this.email = ''; // инициализируем данные пустыми строками
+    this.phone = '';
+    this.address = '';
     }
 
     setData(data: Partial<IBuyer>): void { // принимаем частичные данные покупателя.Если новое значение передано,оно обновляет текущее состояние
@@ -96,44 +96,5 @@ export class BuyerModel { // создаем класс BuyerModel
             return Object.keys(errors).length > 0 ? errors : null; // если в объекте errors есть ошибки-возвращвем сам объект,если нет ошибок возвращаем null
         }
     }
-    //validateField(field: keyof IBuyer, value: string): string | null { // проверяем одно конкретное поле
-        //switch (field) {
-            //case 'email':
-                //if (!value || value.trim() === '') return "Email не может быть пустым"; // если поле пустое,возвращается сообщение об ошибке
-                //return null;
-
-                //case 'address':
-                    //if (!value || value.trim() === '') return "Необходимо указать адрес";
-                    //return null;
-                    //case 'payment':
-                        //if (!value) return "Способ оплаты не выбран";
-                        //if (value !== 'card' && value !== 'cash') { // дополнительно проверяем,чтобы значение было строго card или cash
-                            //return "Выберите корректный способ оплаты";
-                        //}
-                        //return null;
-
-                        //default:
-                            //return null; // если ошибок нет,возвращаем null
-        //}
-    //}
-
-    //validateAll(): Partial<Record<keyof IBuyer, string>> { // проверка всех полей сразу,собирает ошибки в объект и возвращает его.Если ошибок нет,вернется пустой объект
-        //const errors: Partial<Record<keyof IBuyer, string>> = {};
-
-        //const emailError = this.validateField('email', this.email);
-        //if (emailError) errors.email = emailError;
-
-        //const phoneError = this.validateField('phone', this.phone);
-        //if (phoneError) errors.phone = phoneError;
-
-        //const addressError = this.validateField('address', this.address);
-        //if (addressError) errors.address = addressError;
-
-        //const paymentError = this.validateField('payment', this.payment);
-        //if (paymentError) errors.payment = paymentError;
-
-        //return errors;
-    //}
-//}
 // Этот класс содержит данные покупателя, которые тот должен указать при оформлении заказа и сообщает Презентеру,
 // когда эти данные меняются или их нужно проверить перед отправкой заказа

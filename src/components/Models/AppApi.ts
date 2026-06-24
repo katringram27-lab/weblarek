@@ -1,34 +1,22 @@
-import { IApi, IProduct, IOrder, IOrderResult, IProductsResponse } from "../../types/index";
+import { IApi, IOrder, IOrderResult, IProductsResponse } from "../../types/index";
 
-export class AppApi { // создаем класс AppApi
+export class AppApi {
+  // создаем класс AppApi
 
-    protected api: IApi; // переменная api хранит экземпляр базового класса
+  protected api: IApi; // переменная api хранит экземпляр базового класса
 
-    constructor(api: IApi) { // конструктор принимает этот базовый api  и сохраняет его внутрь нашего класса
-        this.api = api;
-    }
+  constructor(api: IApi) {
+    // конструктор принимает этот базовый api  и сохраняет его внутрь нашего класса
+    this.api = api;
+  }
 
-    getProducts(): Promise<IProduct[]> { // getProducts асинхронный метод для загрузки каталога товаров
-        return this.api.get<IProductsResponse>('/product'); // отправляем GET-
-    }
-        //try {
-            //const response = await this.api.get<IProductsResponse>('/product'); // отправляем GET-запрос на эдпоинт /product, ожидаем ответ с типом IProductsResponse
-            //return response.items; // возвращаем массив товаров
-        //} catch(error) { // если сервер недоступен или произошла ошибка
-            //console.log("Возникли проблемы с сервером при получении товаров:", error); // выводится ошибка в консоль
-            //throw error;
-        //}
-    //}
-
-    postOrder(order: IOrder): Promise<IOrderResult> { // postorder асинхронный метод для оформления заказа, принимает данные заказа
-        return this.api.post<IOrderResult>('/order', order);
-    }
-       // try {
-            //const result = await this.api.post<IOrderResult>('/order', order); // делает POST-запрос на адрес /order,передавая данные покупателя и корзины
-            //return result // возвращает положительный результат
-        //} catch(error) {
-            //console.log("Возникли проблемы с сервером при отправке заказа:", error); // выводится ошибка в консоль
-            //throw error;
-        //}
-    //}
+  getProducts(): Promise<IProductsResponse> {
+    // getProducts асинхронный метод для загрузки каталога товаров
+    return this.api.get<IProductsResponse>("/product"); // отправляем GET-
+  }
+  
+  postOrder(order: IOrder): Promise<IOrderResult> {
+    // postorder асинхронный метод для оформления заказа, принимает данные заказа
+    return this.api.post<IOrderResult>("/order", order);
+  }
 }
