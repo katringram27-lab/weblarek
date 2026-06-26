@@ -167,7 +167,6 @@ interface IBuyer {
 
      Методы:
     setData(data: Partial<IBuyer>): void; // сохранение данных в модели
-    validateField(field: keyof IBuyer): { [key in keyof IBuyer]?: string } | null ; // проверяет валидность конкретного поля, возвращает текст ошибки или  null , если поле заполнено
     validateAll(): { [key in keyof IBuyer]?: string } | null; // проверяет валидность всех полей, возвращает объект с ошибкамb или null
     getData(): IBuyer | null; / получение всех данных покупателя(возвращает все текущие данные объекта)
     clearData(): void; // удаляет все текущие данные покупателя

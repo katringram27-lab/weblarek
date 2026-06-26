@@ -19,7 +19,9 @@ export interface IProduct {
   price: number | null;
 }
 
-type TPayment = "card" | "cash"; // TPayment-тип,ограничивающий способ оплаты
+export type TPayment = "card" | "cash"; // TPayment-тип,ограничивающий способ оплаты
+
+export type Errors = { [key: string]: string }; // тип ошибок
 
 export interface IBuyer {
   // интерфейс,описывающий личные данные покупателя

@@ -3,7 +3,7 @@ import { EventEmitter } from "./components/base/Events";
 import { CatalogModel } from "./components/Models/CatalogModel";
 import { CartModel } from "./components/Models/CartModel";
 import { BuyerModel } from "./components/Models/BuyerModel";
-import { IProduct, IOrder, IOrderResult, IProductsResponse } from "./types/index";
+import { IProduct, IOrder, IOrderResult, IProductsResponse, TPayment } from "./types/index";
 import { apiProducts } from "../src/utils/data";
 import { AppApi } from "./components/Models/AppApi";
 import { Api } from "./components/base/Api";
@@ -35,12 +35,12 @@ const cartModel = new CartModel(events); // создаем экземпляр к
 console.log("Текущие товары в корзине:", cartModel.getItems()); // вывели текущие товары в корзине
 
 const newItem: IProduct = {
-  id: "854cef69-976d-4c2a-a18c-2aa45046c390",
-  description: "Если планируете решать задачи в тренажёре, берите два.",
-  image: "/5_Dots.svg",
-  title: "+1 час в сутках",
-  category: "софт-скил",
-  price: 750,
+  id: "", //b06cde61-912f-4663-9751-09956c0eed67",
+  description: "", //Будет стоять над душой и не давать прокрастинировать.",
+  image: "", ///Asterisk_2.svg",
+  title: "", //Мамка-таймер",
+  category: "", //софт-скил",
+  price: null, // number
 };
 
 cartModel.addItem(newItem); // добавляем новый товар
@@ -79,29 +79,47 @@ console.log("Текущие данные покупателя:", buyerModel.getD
 
 const apiBuyer = {
   // пример данных покупателя
-  //payment: 'online',
-  //email: 'kirill67_44@yandex.ru',
-  //phone: '+7 (900) 554-44-00',
-  //address: '143004, Москва, ул. Пушкина, д. 4, стр. 1, кв. 44'
+  payment: "card",
+  email: "",
+  phone: "",
+  address: "",
 };
 
 buyerModel.setData({
   // устанавливаем новые данные для покупателя
-  email: apiBuyer.email,
-  phone: apiBuyer.phone,
-  address: apiBuyer.address,
+  payment: "card", //"card",
+  email: "", //"kirill67_44@yandex.ru",
+  phone: "", //"+7 (900) 554-44-00",
+  address: "", //"143004, Москва, ул. Пушкина, д. 4, стр. 1, кв. 44'"
 });
 
-console.log("Обновленные данные покупателя:", buyerModel.getData()); // обновляем данные покупателяпосле установки новых данных
+console.log("Обновленные данные покупателя:", buyerModel.getData()); // обновляем данные покупателя после установки новых данных
 
 buyerModel.clearData(); // очищаем данные покупателя
 console.log("Данные покупателя после очистки:", buyerModel.getData());
 
-const emailValidation = buyerModel.validateField("email", apiBuyer.email); //проверяем валидность отдельного поля
-console.log("Результат проверки одного поля:", emailValidation);
+function testValidation() {
+  const emptyValidationResults = buyerModel.validateAll();
+  console.log(
+    "Результаты проверки всех полей при пустых данных: ",
+    emptyValidationResults,
+  );
 
-const validationResults = buyerModel.validateAll(); // валидируем все поля
-console.log("Результаты проверки всех полей:", validationResults);
+  const filledBuyerData = {
+    //email: 'kirill67_44@yandex.ru',
+    address: "143004, Москва, ул. Пушкина, д. 4, стр. 1, кв. 44",
+    phone: "+7 (900) 554-44-00",
+    payment: "card" as TPayment,
+  };
+  buyerModel.setData(filledBuyerData);
+
+  const filledValidationResults = buyerModel.validateAll();
+  console.log(
+    "Результат проверки всех полей при заполненных данных: ",
+    filledValidationResults,
+  );
+}
+testValidation();
 
 const apiService = new Api(API_URL);
 const appApi = new AppApi(apiService);
@@ -121,10 +139,10 @@ const order: IOrder = {
 (async () => {
   try {
     const productsResponse: IProductsResponse = await appApi.getProducts();
-    const products: IProduct[] = productsResponse;
+    const products: IProduct[] = productsResponse.items;
     console.log("Каталог товаров: ", products);
   } catch (error) {
-    console.log("Возникли проблемы с сервером при получении товаров ", error);
+    console.log("Возникли проблемы с сервером при получении товаров: ", error);
     //throw error;
   }
 
