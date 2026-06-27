@@ -1,7 +1,11 @@
 import { IBuyer } from "../../types/index";
 import { IEvents } from "../base/Events";
 import { TPayment } from "../../types/index";
-import { Errors } from "../../types/index";
+//import { Errors } from "../../types/index";
+
+type BuyerValidationErrors = {
+  [key in keyof IBuyer]?: string;
+};
 
 export class BuyerModel {
   // создаем класс BuyerModel
@@ -9,8 +13,6 @@ export class BuyerModel {
   protected email: string;
   protected phone: string;
   protected address: string;
-
-  protected errors: Errors = {};
 
   constructor(protected events: IEvents) {
     // принимаем брокер событий events, чтобы модель могла оповещать др части приложения об изменениях
@@ -46,9 +48,9 @@ export class BuyerModel {
     this.address = "";
   }
 
-  validateAll(): { [key in keyof IBuyer]?: string } {
+  validateAll(): BuyerValidationErrors {
     // возвращаем объект с ошибками
-    const errors: { [key in keyof IBuyer]?: string } = {}; // создаем объект,который будет хранить ошибки
+    const errors: BuyerValidationErrors = {}; // создаем объект,который будет хранить ошибки
 
     if (!this.email || this.email.trim() === "") {
       // проверяем поля на валидность
@@ -68,7 +70,7 @@ export class BuyerModel {
       errors.payment = "Выберите корректный способ оплаты";
     }
 
-    return Object.keys(errors).length > 0 ? errors : {}; // если в объекте errors есть ошибки-возвращвем сам объект
+    return errors; // если в объекте errors есть ошибки-возвращвем сам объект
   }
 }
 // Этот класс содержит данные покупателя, которые тот должен указать при оформлении заказа и сообщает Презентеру,
